@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var RedisStore = require('connect-reids')(session);
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -22,6 +23,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
+const {redisCli} = require('./db/redis');
+const redisStore = new RedisStore({
+  client: redisCli
+});
 //处理session
 app.use(session(
   {
@@ -30,39 +35,17 @@ app.use(session(
       path: '/',
       httpOnly: true,
       maxAge: 24*60*60*1000
-    }
+    },
+    store: redisStore
   }
 ))
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 app.use('/api/blog', blogRouter);
-app.use('./api/user', usersRouter);
+app.use('/api/user', usersRouter);
 
-//seesion测试
-app.get('/session-test', (req, res, next) => {
-  // console.log(req.session);
-  // const session = req.session;
-  if (req.session.viewCount == null){
-    req.session.viewCount = 0;
-  }
-  req.session.viewCount ++;
-  res.json({viewCount: req.session.viewCount});
-})
 
-//登录测试
-app.use('./login-test', (req, res, next) => {
-  if (req.session.userName){
-    res.json({
-      erroNumber: 0,
-      user: req.session.userName
-    })
-  }else{
-    res.json({
-      errorNumber: -1
-    })
-  }
-})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
