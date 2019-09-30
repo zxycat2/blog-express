@@ -4,7 +4,7 @@ const {MYSQL_CONFIG} = require('../config/db');
 const con = mysql.createConnection(MYSQL_CONFIG);
 con.connect();
 
-//执行sql请求!!!
+//执行sql请求!!！！
 function excute(sql) {
     const promise = new Promise( (resolve, reject) => {
         con.query(sql, (err, res) => {
