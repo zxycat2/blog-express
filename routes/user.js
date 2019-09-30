@@ -22,4 +22,30 @@ router.post('/login', function(req, res, next) {
     })
 });
 
+// //seesion测试
+// router.get('/session-test', (req, res, next) => {
+//     // console.log(req.session);
+//     // const session = req.session;
+//     if (req.session.viewCount == null){
+//       req.session.viewCount = 0;
+//     }
+//     req.session.viewCount ++;
+//     res.json({viewCount: req.session.viewCount});
+//   })
+  
+//   //登录测试
+// router.use('/login-test', (req, res, next) => {
+//     console.log(req.session);
+// if (req.session.username){
+//     res.json({
+//     erroNumber: 0,
+//     user: req.session.userName
+//     })
+// }else{
+//     res.json({
+//     errorNumber: -1
+//     })
+// }
+// })
+
 module.exports = router;
