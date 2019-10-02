@@ -35,17 +35,26 @@ const getBlogDetail  = (id) => {
 
 //新建博客
 const createNewBlog = (blogData = {}) => {
+    console.log('create new blog...')
+    console.log('blog data: ', blogData);
     //防止sql注入
-    const title = escape(blogData.title);
-    const content = escape(blogData.content);
+    let title = escape(blogData.title);
+    let content = escape(blogData.content);
     const author = escape(blogData.author);
     const createTime = Date.now();
     //防止xss攻击
     title = xss(title);
-    contente = xss(content);
+    content = xss(content);
+
+    // const title = blogData.title;
+    // const content = blogData.content;
+    // const author = blogData.author;
+    // const createTime = Date.now();
 
     const sql = `insert into blogs (title, content, createTime, author) 
     values (${title},${content}, '${createTime}', ${author})`;
+
+    console.log('sql ', sql);
 
     return excute(sql).then( resultObj => {
         console.log(resultObj);

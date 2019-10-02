@@ -1,4 +1,4 @@
-const {ErrorModel} = require('../models');
+const {ErrorModel} = require('../models/resModel');
 
 function loginCheck(req, res, next){
     if (!req.session.username){

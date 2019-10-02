@@ -39,7 +39,7 @@ router.get('/detail', loginCheck, (req, res, next) => {
         // return new SuccessModel(detailData, 'testMsg2')
         const detailResultPromise = getBlogDetail(id);
         return detailResultPromise.then( detailData => {
-            res.json(SuccessModel(detailData, 'testMsg'));
+            res.json(new SuccessModel(detailData, 'testMsg'));
         })
 })
 
@@ -55,7 +55,7 @@ router.post('/update', loginCheck, (req, res, next) => {
         })
 })
 
-router.post('/delete', loginCheck, (req, res,next) => {
+router.post('/del', loginCheck, (req, res,next) => {
     const id = req.query.id;
     const author = req.session.username;
     return result = deleteBlog(id, author).then( result => {
@@ -68,10 +68,10 @@ router.post('/delete', loginCheck, (req, res,next) => {
 })
 
 router.post('/new', loginCheck, (req, res,next) => {
-    const blogData = req.body;
-    blogData.author = req.session.username;
-    return resultPromise = createNewBlog(blogData).then( idObj => {
-        res.json(new SuccessModel(idObj, 'newBlogMsg'));
+    req.body.author = req.session.username;
+    console.log(req.body);
+    return createNewBlog(req.body).then( idObj => {
+        res.json(new SuccessModel(idObj));
     })
 })
 
