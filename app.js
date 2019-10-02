@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-var RedisStore = require('connect-reids')(session);
+var RedisStore = require('connect-redis')(session);
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
